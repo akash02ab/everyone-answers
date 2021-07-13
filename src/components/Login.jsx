@@ -22,7 +22,7 @@ const Login = () => {
 				<Typography variant="h4">Welcome, Please SignIn.</Typography>
 				<AccountCircleIcon className={classes.account} />
 				<Button variant="contained" color="primary" size="medium" onClick={() => dispatch(login())}>
-					Login
+					Sign-In With Google
 				</Button>
 			</Grid>
 		</Container>
