@@ -6,10 +6,13 @@ export default makeStyles(() => ({
 		padding: "10px",
 		display: "flex",
 		alignItems: "flex-end",
-		marginBottom: "80px",
+		margin: "10px",
+		boxShadow: "none",
 	},
 	avatar: {
 		marginRight: "50px",
+		width: "4rem",
+		height: "4rem",
 		cursor: "pointer",
 	},
 }));

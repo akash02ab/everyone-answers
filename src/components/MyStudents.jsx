@@ -1,4 +1,5 @@
 import { Container, Grid, Typography, Button, TextField } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -8,7 +9,7 @@ import Nav from "./Nav";
 
 const MyStudents = () => {
 	const { user } = useSelector((state) => state.authState);
-	const { students } = useSelector((state) => state.myStudentState);
+	const { students, loading, error } = useSelector((state) => state.myStudentState);
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const classes = useStyles();
@@ -47,7 +48,7 @@ const MyStudents = () => {
 		<Container maxWidth="lg" className={classes.container}>
 			<Nav />
 			<Grid className={classes.grid}>
-				<Typography variant="h1">My Students</Typography>
+				<Typography variant="h3">My Students</Typography>
 				<Typography variant="h5">
 					Enter the name of each person who will answer you question separated by comma or new line
 				</Typography>
@@ -62,6 +63,9 @@ const MyStudents = () => {
 				<Button variant="contained" color="primary" className={classes.button} onClick={submithandler}>
 					Submit
 				</Button>
+
+				{loading && <Typography>Submitting . . .</Typography>}
+				{error && <Alert severity="error">{error}</Alert>}
 			</Grid>
 		</Container>
 	);

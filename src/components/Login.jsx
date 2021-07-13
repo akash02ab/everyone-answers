@@ -18,8 +18,8 @@ const Login = () => {
 	return (
 		<Container maxWidth="lg">
 			<Grid className={classes.grid}>
-				<Typography variant="h1">Everyone Answers</Typography>
-				<Typography variant="h4">Welcome, Please SignIn.</Typography>
+				<Typography variant="h3">Everyone Answers</Typography>
+				<Typography variant="h5">Welcome, Please SignIn.</Typography>
 				<AccountCircleIcon className={classes.account} />
 				<Button variant="contained" color="primary" size="medium" onClick={() => dispatch(login())}>
 					Sign-In With Google
