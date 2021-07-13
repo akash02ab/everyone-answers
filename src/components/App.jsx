@@ -17,7 +17,7 @@ const App = () => {
 			dispatch(getStudents(user.email.replaceAll(".", "-")));
 			history.replace("/dashboard");
 		}
-	}, []);
+	}, [user]);
 
 	if (error || fetchError) {
 		return (
