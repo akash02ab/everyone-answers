@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles(() => ({
 	container: {
 		display: "flex",
-		justifyContent: "center",
-		padding: "4rem",
+		flexDirection: "column",
+		alignItems: "center",
 	},
 	grid: {
 		display: "flex",
