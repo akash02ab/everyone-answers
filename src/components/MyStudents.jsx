@@ -56,6 +56,7 @@ const MyStudents = () => {
 					label="Students"
 					variant="outlined"
 					multiline={true}
+					rows={8}
 					placeholder="eg: Ron, Harry, Nevil"
 					required={true}
 					inputRef={inputRef}
