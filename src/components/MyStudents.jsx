@@ -39,7 +39,7 @@ const MyStudents = () => {
 		return null;
 	}
 
-	if (students.length) {
+	if (students && students.length) {
 		history.push("/dashboard");
 		return null;
 	}

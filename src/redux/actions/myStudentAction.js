@@ -1,11 +1,4 @@
-import {
-	ADD_STUDENT_ERROR,
-	ADD_STUDENT_INPROGRESS,
-	ADD_STUDENT_SUCCESS,
-	END_SESSION,
-	END_SESSION_INPROGRESS,
-	SET_STATUS,
-} from ".";
+import { ADD_STUDENT_ERROR, ADD_STUDENT_INPROGRESS, ADD_STUDENT_SUCCESS, END_SESSION, SET_STATUS } from ".";
 import firebase from "../store/firebase";
 const db = firebase.database();
 
@@ -59,7 +52,7 @@ export const getStudents = (instance) => async (dispatch) => {
 
 export const endSession = (instance) => async (dispatch) => {
 	try {
-		dispatch(setStatus("Ending Session"));
+		dispatch(setStatus("Ending Session . . ."));
 		await db.ref("/teacher/" + instance).remove();
 		localStorage.removeItem("persistant");
 		dispatch(endSessionSucess());

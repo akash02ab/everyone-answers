@@ -16,7 +16,7 @@ const Dashboard = () => {
 		dispatch(endSession(user.email.replaceAll(".", "-")));
 	};
 
-	if (!students.length) {
+	if (students && !students.length) {
 		history.replace("/mystudents");
 		return null;
 	}

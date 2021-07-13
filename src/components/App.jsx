@@ -17,6 +17,7 @@ const App = () => {
 			dispatch(getStudents(user.email.replaceAll(".", "-")));
 			history.replace("/dashboard");
 		}
+		// eslint-disable-next-line
 	}, [user]);
 
 	if (error || fetchError) {
@@ -34,7 +35,7 @@ const App = () => {
 	} else if (!user) {
 		history.push("/login");
 		return null;
-	} else if (students.length) {
+	} else if (students && students.length) {
 		history.replace("/dashboard");
 		return null;
 	} else {

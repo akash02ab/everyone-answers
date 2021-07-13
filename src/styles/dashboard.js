@@ -26,6 +26,6 @@ export default makeStyles(() => ({
 	row: {
 		display: "flex",
 		alignItems: "center",
-		gap: "10px",
+		gap: "20px",
 	},
 }));
