@@ -22,7 +22,6 @@ export const login = () => async (dispatch) => {
 
 	try {
 		const result = await firebase.auth().signInWithPopup(provider);
-		console.log(result);
 		dispatch(authSuccess(result.user));
 	} catch (err) {
 		dispatch(authError(err.message));

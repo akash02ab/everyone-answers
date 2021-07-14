@@ -30,8 +30,9 @@ const MyStudents = () => {
 			alert("Students List contains duplicate names.");
 			return;
 		}
-
-		dispatch(addStudents(user.email.replaceAll(".", "-"), studentArr));
+		const instance = user.email.replaceAll(".", "-");
+		const session = Date.now().toString();
+		dispatch(addStudents(instance, session, studentArr));
 	};
 
 	if (!user) {
@@ -61,7 +62,7 @@ const MyStudents = () => {
 					required={true}
 					inputRef={inputRef}
 				/>
-				<Button variant="contained" color="primary" className={classes.button} onClick={submithandler}>
+				<Button variant="contained" color="primary" className={classes.button} onClick={() => submithandler()}>
 					Submit
 				</Button>
 

@@ -1,6 +1,14 @@
-import { ADD_STUDENT_ERROR, ADD_STUDENT_INPROGRESS, ADD_STUDENT_SUCCESS, END_SESSION, SET_STATUS } from ".";
+import {
+	ADD_STUDENT_ERROR,
+	ADD_STUDENT_INPROGRESS,
+	ADD_STUDENT_SUCCESS,
+	END_SESSION,
+	SET_SESSION,
+	SET_STATUS,
+} from ".";
+
 import firebase from "../store/firebase";
-const db = firebase.database();
+const db = firebase.firestore();
 
 const addStudentInProgress = () => ({
 	type: ADD_STUDENT_INPROGRESS,
@@ -21,40 +29,65 @@ const setStatus = (status) => ({
 	payload: status,
 });
 
+const setSession = (session) => ({
+	type: SET_SESSION,
+	payload: session,
+});
+
 const endSessionSucess = () => ({
 	type: END_SESSION,
 });
 
-export const addStudents = (instance, studentsList) => async (dispatch) => {
+export const addStudents = (instance, session, students) => async (dispatch) => {
+	console.log(instance, session, students);
 	try {
 		dispatch(addStudentInProgress());
-		await db.ref("teacher/" + instance).set(studentsList);
-		dispatch(addStudentSuccess(studentsList));
+
+		await db.collection(instance).doc("sessions").set({ session });
+		await db.collection(session).doc("students").set({ students });
+
+		dispatch(addStudentSuccess(students));
+		dispatch(setSession(session));
 	} catch (err) {
 		dispatch(studentError(err.message));
 	}
 };
 
-export const getStudents = (instance) => async (dispatch) => {
+export const getStudents = (session) => async (dispatch) => {
 	try {
 		dispatch(addStudentInProgress());
-		const snapshot = await db.ref("/teacher/" + instance).get();
 
-		if (snapshot) {
-			dispatch(addStudentSuccess(snapshot.val()));
-		} else {
-			dispatch(studentError("No data available"));
-		}
+		await db
+			.collection(session)
+			.doc("students")
+			.onSnapshot((snapshot) => {
+				if (snapshot) {
+					const doc = snapshot.data();
+					if (doc) dispatch(addStudentSuccess(doc.students));
+				} else {
+					dispatch(studentError("No data available"));
+				}
+			});
 	} catch (err) {
 		dispatch(studentError(err.message));
 	}
 };
 
-export const endSession = (instance) => async (dispatch) => {
+export const endSession = (instance, session) => async (dispatch) => {
 	try {
 		dispatch(setStatus("Ending Session . . ."));
-		await db.ref("/teacher/" + instance).remove();
+
+		await db.collection(instance).doc("sessions").delete();
+
+		const ref = db.collection(session);
+		ref.onSnapshot((snapshot) => {
+			snapshot.docs.forEach((doc) => {
+				ref.doc(doc.id).delete();
+			});
+		});
+
 		localStorage.removeItem("persistant");
+
 		dispatch(endSessionSucess());
 	} catch (err) {
 		dispatch(setStatus("Error in ending session."));

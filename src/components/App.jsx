@@ -7,18 +7,18 @@ import { useEffect } from "react";
 import { getStudents } from "../redux/actions/myStudentAction";
 
 const App = () => {
-	const { students, error: fetchError } = useSelector((state) => state.myStudentState);
+	const { students, error: fetchError, session } = useSelector((state) => state.myStudentState);
 	const { user, error } = useSelector((state) => state.authState);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	useEffect(() => {
-		if (user) {
-			dispatch(getStudents(user.email.replaceAll(".", "-")));
+		if (user && session) {
+			dispatch(getStudents(session));
 			history.replace("/dashboard");
 		}
 		// eslint-disable-next-line
-	}, [user]);
+	}, []);
 
 	if (error || fetchError) {
 		return (
@@ -27,7 +27,7 @@ const App = () => {
 				<Grid>
 					<Alert severity="error">
 						<AlertTitle>Error</AlertTitle>
-						{error}
+						{error || fetchError}
 					</Alert>
 				</Grid>
 			</Container>

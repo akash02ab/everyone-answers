@@ -7,13 +7,13 @@ import Nav from "./Nav";
 
 const Dashboard = () => {
 	const { user } = useSelector((state) => state.authState);
-	const { students, loading, status } = useSelector((state) => state.myStudentState);
+	const { students, session, loading, status } = useSelector((state) => state.myStudentState);
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const history = useHistory();
 
 	const clickhandler = () => {
-		dispatch(endSession(user.email.replaceAll(".", "-")));
+		dispatch(endSession(user.email.replaceAll(".", "-"), session));
 	};
 
 	if (students && !students.length) {
@@ -40,7 +40,7 @@ const Dashboard = () => {
 					</Box>
 
 					<Typography variant="h5">
-						Student Link: <Link to="#">http://localhost:3000/#/3760757836</Link>
+						Student Link: <Link to={`/answer/${session}`}>{`http://localhost:3000/answer/${session}`}</Link>
 					</Typography>
 
 					<Grid className={classes.grid}>
