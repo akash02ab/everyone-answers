@@ -1,10 +1,15 @@
-import { FETCH_STUDENT_ERROR, FETCH_STUDENT_INPROGRESS, FETCH_STUDENT_SUCCESS, SET_NAME } from ".";
+import { FETCH_STUDENT_ERROR, FETCH_STUDENT_INPROGRESS, FETCH_STUDENT_SUCCESS, SELECT_NAME, SET_NAME } from ".";
 
 import firebase from "../store/firebase";
 const db = firebase.firestore();
 
 export const setName = (name) => ({
 	type: SET_NAME,
+	payload: name,
+});
+
+export const selectName = (name) => ({
+	type: SELECT_NAME,
 	payload: name,
 });
 

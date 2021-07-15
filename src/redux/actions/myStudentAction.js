@@ -73,6 +73,16 @@ export const getStudents = (session) => async (dispatch) => {
 	}
 };
 
+export const getSession = (instance) => async (dispatch) => {
+	try {
+		const response = await db.collection(instance).doc("sessions").get();
+		const data = response.data();
+		if (data) dispatch(setSession(data.session));
+	} catch (err) {
+		dispatch(studentError(err.message));
+	}
+};
+
 export const endSession = (instance, session) => async (dispatch) => {
 	try {
 		dispatch(setStatus("Ending Session . . ."));

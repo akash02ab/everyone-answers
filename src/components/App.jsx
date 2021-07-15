@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { Container, Grid } from "@material-ui/core";
-import Nav from "./Nav";
 import { useEffect } from "react";
-import { getStudents } from "../redux/actions/myStudentAction";
+import { getSession, getStudents } from "../redux/actions/myStudentAction";
+import Nav from "./Nav";
 
 const App = () => {
 	const { students, error: fetchError, session } = useSelector((state) => state.myStudentState);
@@ -13,12 +13,16 @@ const App = () => {
 	const history = useHistory();
 
 	useEffect(() => {
+		if (user && !session) {
+			dispatch(getSession(user.email.replaceAll(".", "-")));
+		}
+
 		if (user && session) {
 			dispatch(getStudents(session));
 			history.replace("/dashboard");
 		}
 		// eslint-disable-next-line
-	}, []);
+	}, [session, user]);
 
 	if (error || fetchError) {
 		return (
