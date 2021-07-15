@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
 import useStyles from "../styles/login";
+import { getSession } from "../redux/actions/myStudentAction";
 
 const Login = () => {
 	const { user, error } = useSelector((state) => state.authState);
@@ -13,6 +14,7 @@ const Login = () => {
 	const classes = useStyles();
 
 	if (user) {
+		dispatch(getSession(user.email.replaceAll(".", "-")));
 		history.push("/");
 	}
 

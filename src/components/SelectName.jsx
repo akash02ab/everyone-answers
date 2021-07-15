@@ -26,6 +26,7 @@ const SelectName = ({ names }) => {
 		<Container maxWidth="lg">
 			<Grid className={classes.grid}>
 				<Typography variant="h4">Select Your Name</Typography>
+
 				<Select value={selectedName || names[0]} className={classes.dropdown} onChange={changehandler}>
 					{names.map((name, index) => (
 						<MenuItem value={name} key={index}>
@@ -33,6 +34,7 @@ const SelectName = ({ names }) => {
 						</MenuItem>
 					))}
 				</Select>
+
 				<Button color="primary" variant="contained" className={classes.button} onClick={clickhandler}>
 					Continue
 				</Button>

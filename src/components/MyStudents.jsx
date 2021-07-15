@@ -48,11 +48,14 @@ const MyStudents = () => {
 	return (
 		<Container maxWidth="lg" className={classes.container}>
 			<Nav />
+
 			<Grid className={classes.grid}>
 				<Typography variant="h3">My Students</Typography>
+
 				<Typography variant="h5">
 					Enter the name of each person who will answer you question separated by comma or new line
 				</Typography>
+
 				<TextField
 					label="Students"
 					variant="outlined"
@@ -62,6 +65,7 @@ const MyStudents = () => {
 					required={true}
 					inputRef={inputRef}
 				/>
+
 				<Button variant="contained" color="primary" className={classes.button} onClick={() => submithandler()}>
 					Submit
 				</Button>

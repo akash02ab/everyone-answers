@@ -24,7 +24,7 @@ const studentError = (error) => ({
 	error: error,
 });
 
-const setStatus = (status) => ({
+export const setStatus = (status) => ({
 	type: SET_STATUS,
 	payload: status,
 });
@@ -96,9 +96,10 @@ export const endSession = (instance, session) => async (dispatch) => {
 			});
 		});
 
-		localStorage.removeItem("persistant");
+		window.localStorage.clear();
 
 		dispatch(endSessionSucess());
+		dispatch(setStatus(""));
 	} catch (err) {
 		dispatch(setStatus("Error in ending session."));
 	}

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getSession, getStudents } from "../redux/actions/myStudentAction";
+import { getStudents } from "../redux/actions/myStudentAction";
+import { getStudentList } from "../redux/actions/responseAction";
 import Error from "./Error";
 
 const App = () => {
@@ -11,16 +12,13 @@ const App = () => {
 	const history = useHistory();
 
 	useEffect(() => {
-		if (user && !session) {
-			dispatch(getSession(user.email.replaceAll(".", "-")));
-		}
-
-		if (user && session) {
+		if (session) {
 			dispatch(getStudents(session));
+			dispatch(getStudentList(session));
 			history.replace("/dashboard");
 		}
 		// eslint-disable-next-line
-	}, [session, user]);
+	}, [session]);
 
 	if (error || fetchError) {
 		return <Error error={error || fetchError} />;

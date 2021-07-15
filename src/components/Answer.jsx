@@ -19,7 +19,13 @@ const Answer = () => {
 	return (
 		<Container maxWidth="lg">
 			<Grid style={{ marginTop: "20px" }}>
-				{loading ? <LinearProgress /> : name ? <GiveResponse /> : <SelectName names={students} />}
+				{loading ? (
+					<LinearProgress />
+				) : name ? (
+					<GiveResponse session={session} />
+				) : (
+					<SelectName names={students} />
+				)}
 			</Grid>
 		</Container>
 	);
