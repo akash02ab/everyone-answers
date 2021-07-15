@@ -1,4 +1,5 @@
 import { Button, Container, Grid, MenuItem, Select, Typography } from "@material-ui/core";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectName, setName } from "../redux/actions/responseAction";
 import useStyles from "../styles/selectname";
@@ -16,11 +17,15 @@ const SelectName = ({ names }) => {
 		dispatch(setName(selectedName));
 	};
 
+	useEffect(() => {
+		dispatch(selectName(names[0]));
+	}, []);
+
 	return (
 		<Container maxWidth="lg">
 			<Grid className={classes.grid}>
 				<Typography variant="h4">Select Your Name</Typography>
-				<Select value={selectName || names[0]} className={classes.dropdown} onChange={changehandler}>
+				<Select value={selectedName || names[0]} className={classes.dropdown} onChange={changehandler}>
 					{names.map((name, index) => (
 						<MenuItem value={name} key={index}>
 							{name}
