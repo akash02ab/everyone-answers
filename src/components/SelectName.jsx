@@ -19,6 +19,7 @@ const SelectName = ({ names }) => {
 
 	useEffect(() => {
 		dispatch(selectName(names[0]));
+		// eslint-disable-next-line
 	}, []);
 
 	return (
