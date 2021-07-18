@@ -47,7 +47,6 @@ export const addStudents = (instance, session, students) => async (dispatch) => 
 		await db.collection(session).doc("students").set({ students });
 
 		dispatch(addStudentSuccess(students));
-		dispatch(setSession(session));
 	} catch (err) {
 		dispatch(studentError(err.message));
 	}
