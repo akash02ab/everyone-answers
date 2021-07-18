@@ -23,7 +23,8 @@ export const login = () => async (dispatch) => {
 		await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 		const provider = new firebase.auth.GoogleAuthProvider();
 		const result = await firebase.auth().signInWithPopup(provider);
-		dispatch(authSuccess(result.user));
+		dispatch(getSession(result.user.email.replaceAll(".", "-")));
+		setTimeout(() => dispatch(authSuccess(result.user)), 1500);
 	} catch (err) {
 		dispatch(authError(err.message));
 	}
