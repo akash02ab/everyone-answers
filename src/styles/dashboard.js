@@ -8,18 +8,18 @@ export default makeStyles(() => ({
 	},
 	grid: {
 		width: "100%",
-		padding: "1rem 0",
 		display: "flex",
 		flexWrap: "wrap",
 		gap: "2.8rem",
 	},
 	card: {
-		width: "380px",
+		width: "352px",
 		minHeight: "180px",
 		border: "2px solid blue",
 	},
 	head: {
 		display: "flex",
+		flexWrap: "wrap",
 		alignItems: "center",
 		justifyContent: "space-between",
 	},

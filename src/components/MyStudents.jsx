@@ -1,17 +1,14 @@
-import { Container, Grid, Typography, Button, TextField } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import { Grid, Typography, Button, TextField } from "@material-ui/core";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { addStudents } from "../redux/actions/myStudentAction";
 import useStyles from "../styles/mystudents";
-import Nav from "./Nav";
 
 const MyStudents = () => {
 	const { user } = useSelector((state) => state.authState);
-	const { students, loading, error } = useSelector((state) => state.myStudentState);
+	const { loading, error } = useSelector((state) => state.myStudentState);
 	const dispatch = useDispatch();
-	const history = useHistory();
 	const classes = useStyles();
 	const inputRef = useRef();
 
@@ -30,50 +27,44 @@ const MyStudents = () => {
 			alert("Students List contains duplicate names.");
 			return;
 		}
+
+		for (let student of studentArr) {
+			if (student === "") {
+				alert("Student name can't be empty");
+				return;
+			}
+		}
+
 		const instance = user.email.replaceAll(".", "-");
 		const session = Date.now().toString();
 		dispatch(addStudents(instance, session, studentArr));
 	};
 
-	if (!user) {
-		history.push("/login");
-		return null;
-	}
-
-	if (students && students.length) {
-		history.push("/dashboard");
-		return null;
-	}
-
 	return (
-		<Container maxWidth="lg" className={classes.container}>
-			<Nav />
+		<Grid className={classes.grid}>
+			<Typography variant="h3">My Students</Typography>
 
-			<Grid className={classes.grid}>
-				<Typography variant="h3">My Students</Typography>
+			<Typography variant="h5">
+				Enter the name of each person who will answer you question separated by comma or new line
+			</Typography>
 
-				<Typography variant="h5">
-					Enter the name of each person who will answer you question separated by comma or new line
-				</Typography>
+			<TextField
+				label="Students"
+				variant="outlined"
+				multiline={true}
+				rows={8}
+				placeholder="eg: Ron, Harry, Nevil"
+				required={true}
+				inputRef={inputRef}
+			/>
 
-				<TextField
-					label="Students"
-					variant="outlined"
-					multiline={true}
-					rows={8}
-					placeholder="eg: Ron, Harry, Nevil"
-					required={true}
-					inputRef={inputRef}
-				/>
+			<Button variant="contained" color="primary" className={classes.button} onClick={() => submithandler()}>
+				Submit
+			</Button>
 
-				<Button variant="contained" color="primary" className={classes.button} onClick={() => submithandler()}>
-					Submit
-				</Button>
-
-				{loading && <Typography>Submitting . . .</Typography>}
-				{error && <Alert severity="error">{error}</Alert>}
-			</Grid>
-		</Container>
+			{loading && <Typography>Submitting . . .</Typography>}
+			{error && <Alert severity="info">{error}</Alert>}
+		</Grid>
 	);
 };
 

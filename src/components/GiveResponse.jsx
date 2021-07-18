@@ -2,7 +2,7 @@ import { Container, Grid, TextareaAutosize, Typography } from "@material-ui/core
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listenToClearResponse, writeRespone } from "../redux/actions/responseAction";
+import { writeRespone } from "../redux/actions/responseAction";
 import useStyles from "../styles/giveresponse";
 
 const GiveResponse = ({ session }) => {
@@ -16,11 +16,15 @@ const GiveResponse = ({ session }) => {
 	};
 
 	useEffect(() => {
-		dispatch(listenToClearResponse(session, name));
-		// eslint-disable-next-line
+		inputRef.current.value = response;
+		//eslint-disable-next-line
 	}, []);
 
-	if (!response && inputRef.current) inputRef.current.value = "";
+	useEffect(() => {
+		if (inputRef.current && response === null) {
+			inputRef.current.value = "";
+		}
+	}, [response]);
 
 	return (
 		<Container maxWidth="lg">

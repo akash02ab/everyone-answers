@@ -1,37 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getStudents } from "../redux/actions/myStudentAction";
-import { getStudentList } from "../redux/actions/responseAction";
-import Error from "./Error";
+import { getStudents, studentError } from "../redux/actions/myStudentAction";
+import { Container, LinearProgress } from "@material-ui/core";
+import useStyles from "../styles/app";
+import Nav from "./Nav";
+import Dashboard from "./Dashboard";
+import MyStudents from "./MyStudents";
 
 const App = () => {
-	const { students, error: fetchError, session } = useSelector((state) => state.myStudentState);
-	const { user, error } = useSelector((state) => state.authState);
+	const { loading, students, session } = useSelector((state) => state.myStudentState);
 	const dispatch = useDispatch();
-	const history = useHistory();
+	const classes = useStyles();
 
 	useEffect(() => {
 		if (session) {
-			dispatch(getStudents(session));
-			dispatch(getStudentList(session));
-			history.replace("/dashboard");
+			setTimeout(() => dispatch(getStudents(session)), 1000);
+		} else {
+			setTimeout(() => dispatch(studentError("Add some student names to continue.")), 1000);
 		}
 		// eslint-disable-next-line
-	}, [session]);
+	}, []);
 
-	if (error || fetchError) {
-		return <Error error={error || fetchError} />;
-	} else if (!user) {
-		history.push("/login");
-		return null;
-	} else if (students && students.length) {
-		history.replace("/dashboard");
-		return null;
-	} else {
-		history.replace("/mystudents");
-		return null;
-	}
+	return (
+		<Container maxWidth="lg" className={classes.container}>
+			<Nav />
+			{loading ? <LinearProgress /> : students.length ? <Dashboard /> : <MyStudents />}
+		</Container>
+	);
 };
 
 export default App;

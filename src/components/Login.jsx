@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authAction";
 import useStyles from "../styles/login";
-import { getSession } from "../redux/actions/myStudentAction";
 
 const Login = () => {
 	const { user, error } = useSelector((state) => state.authState);
@@ -14,7 +13,6 @@ const Login = () => {
 	const classes = useStyles();
 
 	if (user) {
-		dispatch(getSession(user.email.replaceAll(".", "-")));
 		history.push("/");
 	}
 
@@ -23,10 +21,19 @@ const Login = () => {
 			<Grid className={classes.grid}>
 				<Typography variant="h3">Everyone Answers</Typography>
 				<Typography variant="h5">Welcome, Please SignIn.</Typography>
+
 				<AccountCircleIcon className={classes.account} />
-				<Button variant="contained" color="primary" size="medium" onClick={() => dispatch(login())}>
+
+				<Button
+					variant="contained"
+					color="default"
+					size="medium"
+					startIcon={<img src="icon.svg" alt="g-logo" />}
+					onClick={() => dispatch(login())}
+				>
 					Sign-In With Google
 				</Button>
+
 				{error && (
 					<Alert severity="error">
 						<AlertTitle>Error</AlertTitle>

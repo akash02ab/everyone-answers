@@ -1,10 +1,11 @@
 import { Button, Container, Grid, MenuItem, Select, Typography } from "@material-ui/core";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectName, setName } from "../redux/actions/responseAction";
+import { listenToClearResponse, selectName, setName } from "../redux/actions/responseAction";
 import useStyles from "../styles/selectname";
 
-const SelectName = ({ names }) => {
+const SelectName = ({ names, session }) => {
+	const [disable, setDisable] = useState(false);
 	const classes = useStyles();
 	const { selectedName } = useSelector((state) => state.responseState);
 	const dispatch = useDispatch();
@@ -13,8 +14,10 @@ const SelectName = ({ names }) => {
 		dispatch(selectName(event.target.value));
 	};
 
-	const clickhandler = () => {
-		dispatch(setName(selectedName));
+	const clickhandler = async (event) => {
+		setDisable(true);
+		dispatch(listenToClearResponse(session, selectedName));
+		setTimeout(() => dispatch(setName(selectedName)), 1000);
 	};
 
 	useEffect(() => {
@@ -35,7 +38,13 @@ const SelectName = ({ names }) => {
 					))}
 				</Select>
 
-				<Button color="primary" variant="contained" className={classes.button} onClick={clickhandler}>
+				<Button
+					color="primary"
+					variant="contained"
+					disabled={disable}
+					className={classes.button}
+					onClick={clickhandler}
+				>
 					Continue
 				</Button>
 			</Grid>

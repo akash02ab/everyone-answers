@@ -19,7 +19,7 @@ const addStudentSuccess = (data) => ({
 	payload: data,
 });
 
-const studentError = (error) => ({
+export const studentError = (error) => ({
 	type: ADD_STUDENT_ERROR,
 	error: error,
 });
@@ -39,13 +39,12 @@ const endSessionSucess = () => ({
 });
 
 export const addStudents = (instance, session, students) => async (dispatch) => {
-	console.log(instance, session, students);
 	try {
 		dispatch(addStudentInProgress());
 
 		await db.collection(instance).doc("sessions").set({ session });
 		await db.collection(session).doc("students").set({ students });
-
+		dispatch(setSession(session));
 		dispatch(addStudentSuccess(students));
 	} catch (err) {
 		dispatch(studentError(err.message));
@@ -62,7 +61,9 @@ export const getStudents = (session) => async (dispatch) => {
 			.onSnapshot((snapshot) => {
 				if (snapshot) {
 					const doc = snapshot.data();
-					if (doc) dispatch(addStudentSuccess(doc.students));
+					if (doc) {
+						dispatch(addStudentSuccess(doc.students));
+					}
 				} else {
 					dispatch(studentError("No data available"));
 				}
@@ -76,7 +77,9 @@ export const getSession = (instance) => async (dispatch) => {
 	try {
 		const response = await db.collection(instance).doc("sessions").get();
 		const data = response.data();
-		if (data) dispatch(setSession(data.session));
+		if (data) {
+			dispatch(setSession(data.session));
+		}
 	} catch (err) {
 		dispatch(studentError(err.message));
 	}
@@ -94,8 +97,6 @@ export const endSession = (instance, session) => async (dispatch) => {
 				ref.doc(doc.id).delete();
 			});
 		});
-
-		window.localStorage.clear();
 
 		dispatch(endSessionSucess());
 		dispatch(setStatus(""));
