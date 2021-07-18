@@ -59,6 +59,7 @@ export const logout = () => (dispatch) => {
 		.signOut()
 		.then(() => {
 			dispatch(logoutSuccess());
+			window.location.reload();
 		})
 		.catch((error) => {
 			dispatch(logoutError());
