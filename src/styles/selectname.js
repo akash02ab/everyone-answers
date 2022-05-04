@@ -5,7 +5,7 @@ export default makeStyles(() => ({
 		display: "flex",
 		flexDirection: "column",
 		gap: "1.5rem",
-		padding: "4rem",
+		padding: "calc(1rem + 10vw)",
 	},
 	dropdown: {
 		width: "16rem",

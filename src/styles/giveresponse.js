@@ -5,7 +5,7 @@ export default makeStyles(() => ({
 		display: "flex",
 		flexDirection: "column",
 		gap: "20px",
-		padding: "100px",
+		padding: "calc(10px + 10vw)",
 	},
 	input: {
 		border: "2px solid blue",

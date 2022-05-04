@@ -10,7 +10,7 @@ export default makeStyles(() => ({
 		gap: "1.5rem",
 	},
 	account: {
-		fontSize: "8em",
+		fontSize: "calc(2em + 5vw)",
 		opacity: "0.8",
 		color: "lightgrey",
 	},

@@ -19,7 +19,9 @@ const Login = () => {
 	return (
 		<Container maxWidth="lg">
 			<Grid className={classes.grid}>
-				<Typography variant="h3">Everyone Answers</Typography>
+				<Typography variant="h3" align="center">
+					Everyone Answers
+				</Typography>
 				<Typography variant="h5">Welcome, Please SignIn.</Typography>
 
 				<AccountCircleIcon className={classes.account} />

@@ -10,6 +10,7 @@ export default makeStyles(() => ({
 		width: "100%",
 		display: "flex",
 		flexWrap: "wrap",
+		justifyContent: "center",
 		gap: "2.8rem",
 	},
 	card: {

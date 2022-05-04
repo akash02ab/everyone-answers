@@ -6,6 +6,9 @@ export default makeStyles(() => ({
 		flexDirection: "column",
 		gap: "20px",
 		width: "60%",
+		"@media (max-width: 750px)": {
+			width: "100%",
+		},
 	},
 	button: {
 		width: "80px",

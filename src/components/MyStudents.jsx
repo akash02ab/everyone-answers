@@ -45,7 +45,7 @@ const MyStudents = () => {
 			<Typography variant="h3">My Students</Typography>
 
 			<Typography variant="h5">
-				Enter the name of each person who will answer you question separated by comma or new line
+				Enter the name of each person who will answer your question separated by comma or new line
 			</Typography>
 
 			<TextField
